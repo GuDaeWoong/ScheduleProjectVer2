@@ -1,8 +1,8 @@
-package com.example.scheduleprojectver2.lv1.controller;
+package com.example.scheduleprojectver2.lv2.controller;
 
-import com.example.scheduleprojectver2.lv1.dto.CreateScheduleRequestDto;
-import com.example.scheduleprojectver2.lv1.dto.ScheduleResponseDto;
-import com.example.scheduleprojectver2.lv1.service.ScheduleService;
+import com.example.scheduleprojectver2.lv2.dto.CreateScheduleRequestDto;
+import com.example.scheduleprojectver2.lv2.dto.ScheduleResponseDto;
+import com.example.scheduleprojectver2.lv2.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,8 +48,5 @@ public class ScheduleController {
         scheduleService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
-
 
 }

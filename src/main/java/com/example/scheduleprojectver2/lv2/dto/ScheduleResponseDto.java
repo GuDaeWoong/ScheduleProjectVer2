@@ -1,6 +1,6 @@
-package com.example.scheduleprojectver2.lv1.dto;
+package com.example.scheduleprojectver2.lv2.dto;
 
-import com.example.scheduleprojectver2.lv1.entity.ScheduleEntity;
+import com.example.scheduleprojectver2.lv2.entity.Schedule;
 import lombok.Getter;
 
 @Getter
@@ -17,13 +17,13 @@ public class ScheduleResponseDto {
         this.contents = contents;
     }
 
-    public ScheduleResponseDto(ScheduleEntity scheduleEntity) {
+    public ScheduleResponseDto(Schedule scheduleEntity) {
         this.id = scheduleEntity.getId();
         this.title = scheduleEntity.getTitle();
         this.contents = scheduleEntity.getContents();
     }
 
-    public static ScheduleResponseDto toDto(ScheduleEntity scheduleEntity) {
+    public static ScheduleResponseDto toDto(Schedule scheduleEntity) {
         return new ScheduleResponseDto(scheduleEntity.getId(),scheduleEntity.getTitle(),scheduleEntity.getContents());
     }
 }

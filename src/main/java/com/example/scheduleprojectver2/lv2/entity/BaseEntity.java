@@ -1,4 +1,4 @@
-package com.example.scheduleprojectver2.lv1.entity;
+package com.example.scheduleprojectver2.lv2.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
