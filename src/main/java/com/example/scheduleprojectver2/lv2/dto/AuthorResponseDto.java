@@ -10,10 +10,6 @@ public class AuthorResponseDto {
     private final String password;
     private final String email;
 
-
-
-
-
     public AuthorResponseDto(Long id, String name, String password, String email) {
         this.id = id;
         this.name = name;

@@ -1,6 +1,8 @@
 package com.example.scheduleprojectver2.lv2.entity;
 
+import com.example.scheduleprojectver2.lv2.dto.AuthorUpdateRequestDto;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.Getter;
 
 @Getter
@@ -31,6 +33,16 @@ public class Author extends BaseEntity{
     }
 
     public Author() {
+    }
+
+    public void updateAuthor(@Valid AuthorUpdateRequestDto updateRequestDto) {
+        if (updateRequestDto.getEmail() != null && !updateRequestDto.getPassword().isEmpty()) {
+            this.email = updateRequestDto.getEmail();
+        }
+        if (updateRequestDto.getPassword() != null && !updateRequestDto.getEmail().isEmpty()) {
+            this.password = updateRequestDto.getPassword();
+        }
 
     }
+
 }

@@ -1,9 +1,12 @@
 package com.example.scheduleprojectver2.lv2.service;
 
-import com.example.scheduleprojectver2.lv2.dto.CreateScheduleRequestDto;
+import com.example.scheduleprojectver2.lv2.dto.ScheduleRequestDto;
 import com.example.scheduleprojectver2.lv2.dto.ScheduleResponseDto;
+import com.example.scheduleprojectver2.lv2.dto.ScheduleUpdateRequestDto;
 import com.example.scheduleprojectver2.lv2.entity.Schedule;
 import com.example.scheduleprojectver2.lv2.repository.ScheduleRepository;
+import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +18,7 @@ public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
 
 
-    public ScheduleResponseDto save(CreateScheduleRequestDto requestDto) {
+    public ScheduleResponseDto save(ScheduleRequestDto requestDto) {
 
         Schedule schedule = new Schedule(requestDto.getTitle(),requestDto.getContents());
         // db에 저장
@@ -39,5 +42,11 @@ public class ScheduleService {
     public void delete(Long id) {
         Schedule findScheduleId = scheduleRepository.findByIdOrElseThrow(id);
         scheduleRepository.delete(findScheduleId);
+    }
+
+    @Transactional
+    public void updateSchedule(Long id, @Valid ScheduleUpdateRequestDto updateRequestDto) {
+        Schedule findScheduleId = scheduleRepository.findByIdOrElseThrow(id);
+        findScheduleId.updateSchedule(updateRequestDto);
     }
 }

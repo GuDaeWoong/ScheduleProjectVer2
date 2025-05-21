@@ -1,8 +1,10 @@
 package com.example.scheduleprojectver2.lv2.controller;
 
-import com.example.scheduleprojectver2.lv2.dto.CreateScheduleRequestDto;
+import com.example.scheduleprojectver2.lv2.dto.ScheduleRequestDto;
 import com.example.scheduleprojectver2.lv2.dto.ScheduleResponseDto;
+import com.example.scheduleprojectver2.lv2.dto.ScheduleUpdateRequestDto;
 import com.example.scheduleprojectver2.lv2.service.ScheduleService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +22,7 @@ public class ScheduleController {
 
     // 생성
     @PostMapping
-    public ResponseEntity<ScheduleResponseDto> save(@RequestBody CreateScheduleRequestDto requestDto) {
+    public ResponseEntity<ScheduleResponseDto> save(@RequestBody ScheduleRequestDto requestDto) {
         return new ResponseEntity<>(scheduleService.save(requestDto), HttpStatus.CREATED);
     }
 
@@ -38,6 +40,13 @@ public class ScheduleController {
     ) {
         ScheduleResponseDto scheduleResponseDto = scheduleService.findById(id);
         return new ResponseEntity<>(scheduleResponseDto,HttpStatus.OK);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> updateSchedule(@PathVariable Long id,
+                                               @Valid @RequestBody ScheduleUpdateRequestDto updateRequestDto) {
+        scheduleService.updateSchedule(id, updateRequestDto);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     // 삭제

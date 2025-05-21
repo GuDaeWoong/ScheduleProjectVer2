@@ -1,5 +1,6 @@
 package com.example.scheduleprojectver2.lv2.entity;
 
+import com.example.scheduleprojectver2.lv2.dto.ScheduleUpdateRequestDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -34,4 +35,15 @@ public class Schedule {
     public void setAuthor(Author author) {
         this.author=author;
     }
+
+    public void updateSchedule(ScheduleUpdateRequestDto updateRequestDto) {
+        if (updateRequestDto.getTitle() != null && !updateRequestDto.getTitle().isEmpty()) {
+            this.title = updateRequestDto.getTitle();
+        }
+
+        if (updateRequestDto.getContents() != null && !updateRequestDto.getContents().isEmpty()) {
+            this.contents = updateRequestDto.getContents();
+        }
+    }
+
 }
