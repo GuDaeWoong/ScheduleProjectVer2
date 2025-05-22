@@ -23,13 +23,18 @@ public class Schedule extends BaseEntity {
     @Column(columnDefinition = "longtext")
     private String contents;
 
-    public Schedule(String title, String contents) {
+//    public Schedule( String title, String contents) {
+//        this.title = title;
+//        this.contents = contents;
+//    }
+
+    public Schedule(Author author, String title, String contents) {
+        this.author = author; // 이 부분 추가
         this.title = title;
         this.contents = contents;
     }
 
     public Schedule() {
-
     }
 
     public void setAuthor(Author author) {

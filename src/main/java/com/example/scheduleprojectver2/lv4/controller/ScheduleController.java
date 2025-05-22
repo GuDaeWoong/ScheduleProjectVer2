@@ -4,6 +4,7 @@ import com.example.scheduleprojectver2.lv4.dto.schedule.ScheduleRequestDto;
 import com.example.scheduleprojectver2.lv4.dto.schedule.ScheduleResponseDto;
 import com.example.scheduleprojectver2.lv4.dto.schedule.ScheduleUpdateRequestDto;
 import com.example.scheduleprojectver2.lv4.service.ScheduleService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,8 +23,9 @@ public class ScheduleController {
     // 생성
     @PostMapping
     public ResponseEntity<ScheduleResponseDto> save(
-            @RequestBody ScheduleRequestDto requestDto) {
-        return new ResponseEntity<>(scheduleService.save(requestDto), HttpStatus.CREATED);
+            @RequestBody ScheduleRequestDto requestDto,
+            HttpServletRequest request) {
+        return new ResponseEntity<>(scheduleService.save(requestDto, request), HttpStatus.CREATED);
     }
 
     // 조회
@@ -42,23 +44,26 @@ public class ScheduleController {
         return new ResponseEntity<>(scheduleResponseDto,HttpStatus.OK);
     }
 
+    // 업데이트
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> updateSchedule(@PathVariable Long id,
+                                               @Valid @RequestBody ScheduleUpdateRequestDto updateRequestDto,
+                                               HttpServletRequest request) {
+        scheduleService.updateSchedule(id, updateRequestDto,request);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
     // 삭제
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(
-            @PathVariable Long id
+            @PathVariable Long id,
+            HttpServletRequest request
     ) {
-        scheduleService.delete(id);
+        scheduleService.delete(id,request);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // 업데이트
-    @PatchMapping("/{id}")
-    public ResponseEntity<Void> updateSchedule(@PathVariable Long id,
-                                               @Valid @RequestBody ScheduleUpdateRequestDto updateRequestDto) {
-        scheduleService.updateSchedule(id, updateRequestDto);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
+
 
 
 
