@@ -80,13 +80,10 @@ public class ScheduleService {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Not identical to author's Id");
         }
 
-
-
         findSchedule.get().updateSchedule(updateRequestDto);
     }
 
     public void delete(Long id, HttpServletRequest request) {
-        Optional<Schedule> findSchedule = scheduleRepository.findById(id);
 
         HttpSession session = request.getSession(false);
         Optional<Author> loginAuthor = Optional.ofNullable((Author) session.getAttribute(Const.LOGIN_AUTHOR));
@@ -94,12 +91,18 @@ public class ScheduleService {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Session not found.");
         }
 
+        Optional<Schedule> findSchedule = scheduleRepository.findById(id);
         if (findSchedule.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
         }
+
+        Long creatScheduleById = findSchedule.get().getAuthor().getId();
+        Long loginAuthorId = loginAuthor.get().getId();
+        if (creatScheduleById != loginAuthorId) {
+            log.info("asdfasdfasdf");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Not identical to author's Id");
+        }
         scheduleRepository.delete(findSchedule.get());
     }
-
-
 
 }
