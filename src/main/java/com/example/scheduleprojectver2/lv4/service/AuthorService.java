@@ -1,5 +1,6 @@
 package com.example.scheduleprojectver2.lv4.service;
 
+import com.example.scheduleprojectver2.lv4.config.PasswordEncoder;
 import com.example.scheduleprojectver2.lv4.dto.author.AuthorRequestDto;
 import com.example.scheduleprojectver2.lv4.dto.author.AuthorResponseDto;
 import com.example.scheduleprojectver2.lv4.dto.author.AuthorUpdateRequestDto;
@@ -23,9 +24,14 @@ import java.util.Optional;
 public class AuthorService {
 
     private final AuthorRepository authorRepository;
+    // 비밀번호 암호화
+    private final PasswordEncoder passwordEncoder;
 
     public AuthorResponseDto createAuthor(AuthorRequestDto requestDto) {
-        Author author = new Author(requestDto.getName(), requestDto.getPassword(), requestDto.getEmail());
+
+        String encodePassword =  passwordEncoder.encode(requestDto.getPassword());
+
+        Author author = new Author(requestDto.getName(),encodePassword , requestDto.getEmail());
 
         Author save = authorRepository.save(author);
 
@@ -78,8 +84,9 @@ public class AuthorService {
         if (findAuthor.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist email = " + email);
         }
-        // 이메일과 비밀번호가 일치하지 않을 경우 HTTP Status code 401을 반환
-        if (!findAuthor.get().getPassword().equals(password)) {
+
+        // 암호화 비밀번호와 비교
+        if (!passwordEncoder.matches(password, findAuthor.get().getPassword())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid email or password");
         }
 
