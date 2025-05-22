@@ -2,12 +2,14 @@ package com.example.scheduleprojectver2.lv4.dto.author;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
 @Getter
 public class AuthorRequestDto {
 
     @NotBlank
+    @Size(max = 4, message = "사용자명은 4글자를 초과할 수 없습니다.")
     private final String name;
 
     @NotBlank
