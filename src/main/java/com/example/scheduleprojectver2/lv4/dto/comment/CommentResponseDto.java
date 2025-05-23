@@ -1,6 +1,7 @@
 package com.example.scheduleprojectver2.lv4.dto.comment;
 
 import com.example.scheduleprojectver2.lv4.entity.Comment;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -19,4 +20,21 @@ public class CommentResponseDto {
         this.content = saveComment.getContents();
 
     }
+
+    public CommentResponseDto(Long commentId, Long authorId, Long scheduleId, @NotNull String contents) {
+        this.commentId = commentId;
+        this.authorId = authorId;
+        this.scheduleId= scheduleId;
+        this.content = contents;
+    }
+
+    public static CommentResponseDto toDto(Comment comment) {
+        return  new CommentResponseDto(
+                comment.getId(),
+                comment.getAuthor().getId(),
+                comment.getSchedule().getId(),
+                comment.getContents()
+        );
+    }
+
 }

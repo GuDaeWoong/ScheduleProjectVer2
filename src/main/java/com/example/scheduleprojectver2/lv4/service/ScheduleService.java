@@ -102,9 +102,6 @@ public class ScheduleService {
 
     public Schedule getId(Long id) {
         Optional<Schedule> findSchedule = scheduleRepository.findById(id);
-        if (findSchedule.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
-        }
         return findSchedule.get();
     }
 

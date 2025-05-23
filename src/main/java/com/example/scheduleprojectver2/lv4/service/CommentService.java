@@ -13,6 +13,8 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -31,8 +33,23 @@ public class CommentService {
         // schedule 추출
         Schedule ScheduleGetId = scheduleService.getId(scheduleId);
 
-        Comment comment = new Comment(loginAuthor, ScheduleGetId, requestDto);
+        Comment comment = new Comment(loginAuthor, ScheduleGetId, requestDto.getContents());
         Comment saveComment = commentRepository.save(comment);
         return  new CommentResponseDto(saveComment);
     }
+
+    public List<CommentResponseDto> findAllComment() {
+        return commentRepository.findAll()
+                .stream().map(CommentResponseDto::toDto)
+                .toList();
+    }
+
+    public List<CommentResponseDto> scheduleCommentViewer(Long scheduleId) {
+        return commentRepository.findByScheduleId(scheduleId)
+                .stream()
+                .map(CommentResponseDto::toDto)
+                .toList();
+    }
+
+
 }

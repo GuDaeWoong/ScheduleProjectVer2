@@ -1,6 +1,5 @@
 package com.example.scheduleprojectver2.lv4.entity;
 
-import com.example.scheduleprojectver2.lv4.dto.comment.CommentRequestDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -25,7 +24,7 @@ public class Comment extends BaseEntity {
     @NotNull
     private String contents;
 
-    public Comment(Author author, Schedule schedule, CommentRequestDto requestDto) {
+    public Comment(Author author, Schedule schedule, String requestDto) {
         this.author = author;
         this.schedule = schedule;
         this.contents = String.valueOf(requestDto);
