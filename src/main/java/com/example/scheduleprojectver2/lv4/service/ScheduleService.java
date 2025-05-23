@@ -27,14 +27,10 @@ public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
     private final AuthorService authorService;
 
-
     public ScheduleResponseDto save(ScheduleRequestDto requestDto, HttpServletRequest request) {
 
         HttpSession session = request.getSession(false);
         Optional<Author> loginAuthor = Optional.ofNullable((Author) session.getAttribute(Const.LOGIN_AUTHOR));
-        if (loginAuthor.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Session not found.");
-        }
 
         Schedule schedule = new Schedule(loginAuthor.get(),requestDto.getTitle(), requestDto.getContents());
         // db에 저장
@@ -56,7 +52,6 @@ public class ScheduleService {
         }
         Schedule findScheduleById = findSchedule.get();
         return new ScheduleResponseDto(findScheduleById.getId(), findScheduleById.getTitle(), findScheduleById.getContents());
-
     }
 
     @Transactional
@@ -103,6 +98,14 @@ public class ScheduleService {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Not identical to author's Id");
         }
         scheduleRepository.delete(findSchedule.get());
+    }
+
+    public Schedule getId(Long id) {
+        Optional<Schedule> findSchedule = scheduleRepository.findById(id);
+        if (findSchedule.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
+        }
+        return findSchedule.get();
     }
 
 }

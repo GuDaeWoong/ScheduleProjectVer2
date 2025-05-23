@@ -4,6 +4,8 @@ import com.example.scheduleprojectver2.lv4.dto.schedule.ScheduleUpdateRequestDto
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Table(name = "schedule")
@@ -23,13 +25,13 @@ public class Schedule extends BaseEntity {
     @Column(columnDefinition = "longtext")
     private String contents;
 
-//    public Schedule( String title, String contents) {
-//        this.title = title;
-//        this.contents = contents;
-//    }
+    // 연결만하는것이고 변수가 생성되진않음
+    // 관계성 주인임을 명명
+    @OneToMany(mappedBy = "schedule")
+    private List<Comment> comments;
 
     public Schedule(Author author, String title, String contents) {
-        this.author = author; // 이 부분 추가
+        this.author = author;
         this.title = title;
         this.contents = contents;
     }

@@ -25,7 +25,7 @@ public class ScheduleController {
     public ResponseEntity<ScheduleResponseDto> save(
             @RequestBody ScheduleRequestDto requestDto,
             HttpServletRequest request) {
-        return new ResponseEntity<>(scheduleService.save(requestDto, request), HttpStatus.CREATED);
+        return new ResponseEntity<>(scheduleService.save(requestDto,request), HttpStatus.CREATED);
     }
 
     // 조회
