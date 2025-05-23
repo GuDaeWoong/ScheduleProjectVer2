@@ -10,11 +10,10 @@ import org.springframework.context.annotation.Configuration;
 public class Config {
     @Bean
     public FilterRegistrationBean loginFilter(){
-        FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>();
-        filterRegistrationBean.setFilter(new LoginFilter());
-        filterRegistrationBean.setOrder(1);
-        filterRegistrationBean.addUrlPatterns("/*");
-        return filterRegistrationBean;
+        FilterRegistrationBean<Filter> RegistrationBean = new FilterRegistrationBean<>();
+        RegistrationBean.setFilter(new LoginFilter());
+        RegistrationBean.setOrder(1);
+        RegistrationBean.addUrlPatterns("/*");
+        return RegistrationBean;
     }
-
 }

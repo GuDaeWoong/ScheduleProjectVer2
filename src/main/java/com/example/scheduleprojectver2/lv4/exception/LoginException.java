@@ -1,10 +1,16 @@
 package com.example.scheduleprojectver2.lv4.exception;
 
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
 
-public class LoginException extends ResponseStatusException {
-    public LoginException() {
-        super(HttpStatus.UNAUTHORIZED,"로그인해주세요");
+@Getter
+public class LoginException extends RuntimeException {
+
+    private final HttpStatus httpStatus;
+
+    public LoginException(HttpStatus httpStatus, String message) {
+        super(message);
+        this.httpStatus = httpStatus;
     }
+
 }
