@@ -4,6 +4,7 @@ import com.example.scheduleprojectver2.lv4.exception.LoginException;
 import com.example.scheduleprojectver2.lv4.util.Const;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -26,7 +27,7 @@ public class LoginFilter implements Filter {
 
         // 다양한 기능을 사용하기 위해 다운 캐스팅
         HttpServletRequest httpRequest = (HttpServletRequest) request;
-//        HttpServletResponse httpResponse = (HttpServletResponse) response;
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
         String requestURI = httpRequest.getRequestURI(); // 들어온 URI
 
         if (!isWhiteList(requestURI)) {// 화이트 리스트에 속하지 않은 경우

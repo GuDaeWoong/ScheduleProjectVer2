@@ -3,8 +3,10 @@ package com.example.scheduleprojectver2.lv4.controller;
 
 import com.example.scheduleprojectver2.lv4.dto.comment.CommentRequestDto;
 import com.example.scheduleprojectver2.lv4.dto.comment.CommentResponseDto;
+import com.example.scheduleprojectver2.lv4.dto.comment.CommentUpdateRequestDto;
 import com.example.scheduleprojectver2.lv4.service.CommentService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +25,6 @@ public class CommentController {
 //    @PostMapping("/create")
     @PostMapping("/create/{scheduleId}")
     public ResponseEntity<CommentResponseDto> saveComment(
-//            @RequestParam Long scheduleId,
             @PathVariable Long scheduleId,
             @RequestBody CommentRequestDto requestDto,
             HttpServletRequest request
@@ -45,8 +46,38 @@ public class CommentController {
        return new ResponseEntity<>(commentService.scheduleCommentViewer(scheduleId),HttpStatus.OK);
     }
 
+    // 업데이트
+    @PatchMapping("/{commentId}")
+    public ResponseEntity<Void> updateCommnet(@PathVariable Long commentId,
+                                              @Valid @RequestBody CommentUpdateRequestDto updateRequestDto,
+                                              HttpServletRequest request
+                                              ) {
+        commentService.updateCommnet(commentId,updateRequestDto,request);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    //삭제
+    @DeleteMapping("/{commentId}")
+    public ResponseEntity<Void> deleteComment(
+            @PathVariable Long commentId,
+            HttpServletRequest request
+    ){
+        commentService.deleteComment(commentId, request);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

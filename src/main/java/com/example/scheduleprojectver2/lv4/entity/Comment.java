@@ -1,6 +1,8 @@
 package com.example.scheduleprojectver2.lv4.entity;
 
+import com.example.scheduleprojectver2.lv4.dto.comment.CommentUpdateRequestDto;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
@@ -32,6 +34,11 @@ public class Comment extends BaseEntity {
     }
 
     public Comment() {
+    }
 
+    public void updateComment(@Valid CommentUpdateRequestDto updateRequestDto) {
+        if (updateRequestDto.getContent() != null) {
+            this.contents = updateRequestDto.getContent();
+        }
     }
 }
