@@ -35,14 +35,14 @@ public class AuthorController {
             @Valid @RequestBody LoginAuthorDto requestDto,
             HttpServletRequest request
     ) {
-        LoginAuthorDto responseDto = authorService.login(requestDto.getEmail(),requestDto.getPassword(),request);
+        LoginAuthorDto responseDto = authorService.login(requestDto.getEmail(), requestDto.getPassword(), request);
         String authorEmail = responseDto.getEmail();
 
         // 로그인 실패시
         if (authorEmail.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist email = " + authorEmail);
         }
-        return new ResponseEntity<>(responseDto,HttpStatus.OK);
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
     // 로그아웃

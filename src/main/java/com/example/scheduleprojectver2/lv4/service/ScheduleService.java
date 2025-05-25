@@ -39,7 +39,6 @@ public class ScheduleService {
         Optional<Author> loginAuthor = Optional.ofNullable((Author) session.getAttribute(Const.LOGIN_AUTHOR));
 
         Schedule schedule = new Schedule(loginAuthor.get(), requestDto.getTitle(), requestDto.getContents());
-        // db에 저장
         Schedule save = scheduleRepository.save(schedule);
 
         return new ScheduleResponseDto(save);
@@ -54,18 +53,21 @@ public class ScheduleService {
 
     @Transactional
     public Page<ScheduleGetAllResponseDto> getAllSchedule(int page, int size) {
-        //페이지와 사이즈를 받으며 modifiedAt기준으로 정렬
+
         Pageable pageable = PageRequest.of(page, size, Sort.by("modifiedAt").descending());
+
         return scheduleRepository.findAllSchedulesWithCommentCount(pageable);
     }
 
     @Transactional
     public ScheduleResponseDto findById(Long id) {
+
         Optional<Schedule> findSchedule = scheduleRepository.findById(id);
         if (findSchedule.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
         }
         Schedule findScheduleById = findSchedule.get();
+
         return new ScheduleResponseDto(findScheduleById.getId(), findScheduleById.getTitle(), findScheduleById.getContents());
     }
 

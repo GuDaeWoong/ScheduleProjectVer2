@@ -38,7 +38,6 @@ public class CommentService {
         }
         Author loginAuthor =(Author) session.getAttribute(Const.LOGIN_AUTHOR);
         
-        // schedule 추출 // schedule이 있는지 보고 작성하기때문에 없는지 확인안함
         Schedule ScheduleGetId = scheduleService.getId(scheduleId);
 
         Comment comment = new Comment(loginAuthor, ScheduleGetId, requestDto.getContents());
@@ -64,7 +63,6 @@ public class CommentService {
         // 로그인한 사용자 정보 가져오기
         Author loggedInAuthor = (Author) request.getSession().getAttribute(Const.LOGIN_AUTHOR);
 
-        // 댓글 찾기 및 댓글이 없는 경우 처리
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Comment not found with ID: " + commentId));
 

@@ -40,6 +40,7 @@ public class LoginFilter implements Filter {
 
         chain.doFilter(request, response);
     }
+
     // 로그인 여부를 확인하는 URL인지 체크하는 메서드
     private boolean isWhiteList(String requestURI) {
         return PatternMatchUtils.simpleMatch(WHITE_LIST, requestURI);

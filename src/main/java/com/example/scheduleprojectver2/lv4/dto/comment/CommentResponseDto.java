@@ -14,8 +14,8 @@ public class CommentResponseDto {
     private String content;
 
     public CommentResponseDto(Comment saveComment) {
-        this.commentId= saveComment.getId();
-        this.authorId=saveComment.getAuthor().getId();
+        this.commentId = saveComment.getId();
+        this.authorId = saveComment.getAuthor().getId();
         this.scheduleId = saveComment.getSchedule().getId();
         this.content = saveComment.getContents();
 
@@ -24,12 +24,12 @@ public class CommentResponseDto {
     public CommentResponseDto(Long commentId, Long authorId, Long scheduleId, @NotNull String contents) {
         this.commentId = commentId;
         this.authorId = authorId;
-        this.scheduleId= scheduleId;
+        this.scheduleId = scheduleId;
         this.content = contents;
     }
 
     public static CommentResponseDto toDto(Comment comment) {
-        return  new CommentResponseDto(
+        return new CommentResponseDto(
                 comment.getId(),
                 comment.getAuthor().getId(),
                 comment.getSchedule().getId(),

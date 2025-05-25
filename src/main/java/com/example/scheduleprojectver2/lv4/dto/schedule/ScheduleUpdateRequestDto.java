@@ -1,4 +1,5 @@
 package com.example.scheduleprojectver2.lv4.dto.schedule;
+
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -15,6 +16,6 @@ public class ScheduleUpdateRequestDto {
 
     @AssertTrue(message = "하나 이상 수정해야 합니다.")
     public boolean hasPendingChanges() {
-        return title!= null || contents!= null;
+        return title != null || contents != null;
     }
 }

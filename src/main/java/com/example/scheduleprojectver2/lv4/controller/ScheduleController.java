@@ -37,7 +37,7 @@ public class ScheduleController {
         return new ResponseEntity<>(scheduleResponseDtos, HttpStatus.OK);
     }
 
-    // 모두 조회 // 제목, 내용, 댓글 개수, 작성일, 수정일, 작성 유저명
+    // 모두 조회 (제목, 내용, 댓글 개수, 작성일, 수정일, 작성 유저명)
     @GetMapping("/all")
     public ResponseEntity<Page<ScheduleGetAllResponseDto>> getAllSchedule(
             @RequestParam(defaultValue = "0") int page,
@@ -46,7 +46,6 @@ public class ScheduleController {
         Page<ScheduleGetAllResponseDto> schedulePage = scheduleService.getAllSchedule(page, size);
         return new ResponseEntity<>(schedulePage, HttpStatus.OK);
     }
-
 
     // 단건 조회
     @GetMapping("/{id}")
@@ -75,4 +74,5 @@ public class ScheduleController {
         scheduleService.delete(id,request);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
 }

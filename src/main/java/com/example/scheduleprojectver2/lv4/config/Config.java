@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class Config {
     @Bean
-    public FilterRegistrationBean loginFilter(){
+    public FilterRegistrationBean loginFilter() {
         FilterRegistrationBean<Filter> RegistrationBean = new FilterRegistrationBean<>();
         RegistrationBean.setFilter(new LoginFilter());
         RegistrationBean.setOrder(1);

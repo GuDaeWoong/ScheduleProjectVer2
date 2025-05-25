@@ -18,7 +18,7 @@ public class AuthorUpdateRequestDto {
     private String password;
 
     @NotBlank
-    @Pattern(regexp="^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])+[.][a-zA-Z]{2,3}$", message="이메일 주소 양식을 확인해주세요")
+    @Pattern(regexp = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])+[.][a-zA-Z]{2,3}$", message = "이메일 주소 양식을 확인해주세요")
     private String email;
 
     //사용자가 비밀번호, 이메일 또는 이름 중 하나 이상을 수정했는지를 확인하는 검증 로직
