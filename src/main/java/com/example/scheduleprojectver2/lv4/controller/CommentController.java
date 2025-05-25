@@ -22,7 +22,6 @@ public class CommentController {
     private final CommentService commentService;
 
     //생성
-//    @PostMapping("/create")
     @PostMapping("/create/{scheduleId}")
     public ResponseEntity<CommentResponseDto> saveComment(
             @PathVariable Long scheduleId,
@@ -65,7 +64,6 @@ public class CommentController {
         commentService.deleteComment(commentId, request);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 
 }
 

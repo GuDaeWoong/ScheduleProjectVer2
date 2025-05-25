@@ -1,5 +1,6 @@
 package com.example.scheduleprojectver2.lv4.controller;
 
+import com.example.scheduleprojectver2.lv4.dto.schedule.ScheduleGetAllResponseDto;
 import com.example.scheduleprojectver2.lv4.dto.schedule.ScheduleRequestDto;
 import com.example.scheduleprojectver2.lv4.dto.schedule.ScheduleResponseDto;
 import com.example.scheduleprojectver2.lv4.dto.schedule.ScheduleUpdateRequestDto;
@@ -7,6 +8,7 @@ import com.example.scheduleprojectver2.lv4.service.ScheduleService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +37,17 @@ public class ScheduleController {
         return new ResponseEntity<>(scheduleResponseDtos, HttpStatus.OK);
     }
 
+    // 모두 조회 // 제목, 내용, 댓글 개수, 작성일, 수정일, 작성 유저명
+    @GetMapping("/all")
+    public ResponseEntity<Page<ScheduleGetAllResponseDto>> getAllSchedule(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        Page<ScheduleGetAllResponseDto> schedulePage = scheduleService.getAllSchedule(page, size);
+        return new ResponseEntity<>(schedulePage, HttpStatus.OK);
+    }
+
+
     // 단건 조회
     @GetMapping("/{id}")
     public ResponseEntity<ScheduleResponseDto> findById(
@@ -62,10 +75,4 @@ public class ScheduleController {
         scheduleService.delete(id,request);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
-
-
-
-
 }
