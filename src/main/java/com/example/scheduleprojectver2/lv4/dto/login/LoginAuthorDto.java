@@ -11,6 +11,7 @@ public class LoginAuthorDto {
 
     @NotBlank
     private final String password;
+
     // 로그인 인증
     public LoginAuthorDto(String email, String password) {
         this.email = email;
