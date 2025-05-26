@@ -73,22 +73,22 @@ public class ScheduleService {
 
     @Transactional
     public void updateSchedule(Long id, @Valid ScheduleUpdateRequestDto updateRequestDto, HttpServletRequest request) {
-
+        // 로그인 작가 정보
         HttpSession session = request.getSession(false);
-        Optional<Author> loginAuthor = Optional.ofNullable((Author) session.getAttribute(Const.LOGIN_AUTHOR));
-        if (loginAuthor.isEmpty()) {
+        if (session == null) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Session not found.");
         }
+        Author loginAuthor = (Author) session.getAttribute(Const.LOGIN_AUTHOR);
 
+        // id로 스케줄을 탐색
         Optional<Schedule> findSchedule = scheduleRepository.findById(id);
         if (findSchedule.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
         }
 
-        Long creatScheduleById = findSchedule.get().getAuthor().getId();
-        Long loginAuthorId = loginAuthor.get().getId();
-        if (creatScheduleById != loginAuthorId) {
-            log.info("asdfasdfasdf");
+        Schedule scheduleToUpdate = findSchedule.get();
+
+        if (!scheduleToUpdate.getAuthor().getId().equals(loginAuthor.getId())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Not identical to author's Id");
         }
 
