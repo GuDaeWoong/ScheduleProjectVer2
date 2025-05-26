@@ -29,6 +29,7 @@ public class CommentService {
     private final AuthorService authorService;
     private final ScheduleService scheduleService;
 
+    @Transactional
     public CommentResponseDto saveComment(Long scheduleId,CommentRequestDto requestDto, HttpServletRequest request
     ) {
         // 작성자 추출
@@ -45,12 +46,14 @@ public class CommentService {
         return  new CommentResponseDto(saveComment);
     }
 
+    @Transactional
     public List<CommentResponseDto> findAllComment() {
         return commentRepository.findAll()
                 .stream().map(CommentResponseDto::toDto)
                 .toList();
     }
 
+    @Transactional
     public List<CommentResponseDto> scheduleCommentViewer(Long scheduleId) {
         return commentRepository.findByScheduleId(scheduleId)
                 .stream()
@@ -74,6 +77,7 @@ public class CommentService {
         comment.updateComment(updateRequestDto);
     }
 
+    @Transactional
     public void deleteComment(Long commentId, HttpServletRequest request) {
         // 로그인한 사용자 정보 가져오기
         Author loggedInAuthor = (Author) request.getSession().getAttribute(Const.LOGIN_AUTHOR);

@@ -24,16 +24,16 @@ public class ScheduleController {
 
     // 생성
     @PostMapping
-    public ResponseEntity<ScheduleResponseDto> save(
+    public ResponseEntity<ScheduleResponseDto> saveSchedule(
             @RequestBody ScheduleRequestDto requestDto,
             HttpServletRequest request) {
-        return new ResponseEntity<>(scheduleService.save(requestDto,request), HttpStatus.CREATED);
+        return new ResponseEntity<>(scheduleService.saveSchedule(requestDto,request), HttpStatus.CREATED);
     }
 
     // 조회
     @GetMapping
-    public ResponseEntity<List<ScheduleResponseDto>> findAll() {
-        List<ScheduleResponseDto> scheduleResponseDtos = scheduleService.findAll();
+    public ResponseEntity<List<ScheduleResponseDto>> findAllSchedule() {
+        List<ScheduleResponseDto> scheduleResponseDtos = scheduleService.findAllSchedule();
         return new ResponseEntity<>(scheduleResponseDtos, HttpStatus.OK);
     }
 
@@ -49,10 +49,10 @@ public class ScheduleController {
 
     // 단건 조회
     @GetMapping("/{id}")
-    public ResponseEntity<ScheduleResponseDto> findById(
+    public ResponseEntity<ScheduleResponseDto> findByScheduleId(
             @PathVariable Long id
     ) {
-        ScheduleResponseDto scheduleResponseDto = scheduleService.findById(id);
+        ScheduleResponseDto scheduleResponseDto = scheduleService.findByScheduleId(id);
         return new ResponseEntity<>(scheduleResponseDto,HttpStatus.OK);
     }
 

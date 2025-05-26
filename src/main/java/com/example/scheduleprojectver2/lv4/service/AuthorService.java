@@ -29,6 +29,7 @@ public class AuthorService {
     // 비밀번호 암호화
     private final PasswordEncoder passwordEncoder;
 
+    @Transactional
     public AuthorResponseDto createAuthor(AuthorRequestDto requestDto) {
 
         String encodePassword = passwordEncoder.encode(requestDto.getPassword());
@@ -40,6 +41,7 @@ public class AuthorService {
         return new AuthorResponseDto(save);
     }
 
+    @Transactional
     public AuthorResponseDto findById(Long id) {
 
         Optional<Author> findAuthor = authorRepository.findById(id);
@@ -51,6 +53,7 @@ public class AuthorService {
         return new AuthorResponseDto(findByAuthor.getId(), findByAuthor.getName(), findByAuthor.getPassword(), findByAuthor.getEmail());
     }
 
+    @Transactional
     public LoginAuthorDto findByEmail(String authorEmail) {
 
         Optional<Author> findAuthor = authorRepository.findByEmail(authorEmail);
@@ -62,6 +65,7 @@ public class AuthorService {
         return new LoginAuthorDto(findAuthor.get().getEmail(), findAuthor.get().getPassword());
     }
 
+    @Transactional
     public void deleteAuthor(Long id) {
 
         Optional<Author> findAuthor = authorRepository.findById(id);
@@ -111,7 +115,7 @@ public class AuthorService {
 
         HttpSession session = request.getSession(false);
         if (session != null) {
-            session.invalidate(); // 해당 세션(데이터)을 삭제한다.
+            session.invalidate(); // 해당 세션을 삭제
         }
     }
 }

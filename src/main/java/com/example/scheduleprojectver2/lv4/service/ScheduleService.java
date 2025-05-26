@@ -33,7 +33,7 @@ public class ScheduleService {
     private final AuthorService authorService;
 
     @Transactional
-    public ScheduleResponseDto save(ScheduleRequestDto requestDto, HttpServletRequest request) {
+    public ScheduleResponseDto saveSchedule(ScheduleRequestDto requestDto, HttpServletRequest request) {
 
         HttpSession session = request.getSession(false);
         Optional<Author> loginAuthor = Optional.ofNullable((Author) session.getAttribute(Const.LOGIN_AUTHOR));
@@ -45,7 +45,7 @@ public class ScheduleService {
     }
 
     @Transactional
-    public List<ScheduleResponseDto> findAll() {
+    public List<ScheduleResponseDto> findAllSchedule() {
         return scheduleRepository.findAll()
                 .stream().map(ScheduleResponseDto::toDto)
                 .toList();
@@ -60,7 +60,7 @@ public class ScheduleService {
     }
 
     @Transactional
-    public ScheduleResponseDto findById(Long id) {
+    public ScheduleResponseDto findByScheduleId(Long id) {
 
         Optional<Schedule> findSchedule = scheduleRepository.findById(id);
         if (findSchedule.isEmpty()) {
@@ -98,21 +98,22 @@ public class ScheduleService {
     @Transactional
     public void delete(Long id, HttpServletRequest request) {
 
+        // 로그인한 작성자 정보 가져오기
         HttpSession session = request.getSession(false);
-        Optional<Author> loginAuthor = Optional.ofNullable((Author) session.getAttribute(Const.LOGIN_AUTHOR));
-        if (loginAuthor.isEmpty()) {
+        if (session == null) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Session not found.");
         }
+        Author loginAuthor = (Author) session.getAttribute(Const.LOGIN_AUTHOR);
 
+        // 삭제할 스케줄
         Optional<Schedule> findSchedule = scheduleRepository.findById(id);
         if (findSchedule.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
         }
 
-        Long creatScheduleById = findSchedule.get().getAuthor().getId();
-        Long loginAuthorId = loginAuthor.get().getId();
-        if (creatScheduleById != loginAuthorId) {
-            log.info("asdfasdfasdf");
+        Schedule scheduleToDelete = findSchedule.get();
+
+        if (!scheduleToDelete.getAuthor().getId().equals(loginAuthor.getId())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,"Not identical to author's Id");
         }
         scheduleRepository.delete(findSchedule.get());
