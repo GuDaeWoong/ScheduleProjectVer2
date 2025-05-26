@@ -25,7 +25,7 @@ public class Author extends BaseEntity {
     private List<Schedule> schedules;
 
     @NotBlank
-    @Column(nullable = false, unique = true, name = "name")
+    @Column(nullable = false, name = "name")
     private String name;
 
     @NotBlank
