@@ -52,7 +52,7 @@ public class CommentController {
                                               HttpServletRequest request
     ) {
         commentService.updateCommnet(commentId, updateRequestDto, request);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     //삭제
